@@ -9,8 +9,12 @@ data = file.read()
 data = json.loads(data)
 file.close()
 token, channel, nickname = data['token'], data['channel'], data['nickname']
+if token == '' or channel == '' or nickname == '':
+    print('Please fill in the config.json file')
+    exit()
 
 client_socket = irc_connect.set_socket(token, channel, nickname)
+
 print('ready')
 
 lol_count = 0

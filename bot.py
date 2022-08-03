@@ -3,6 +3,7 @@ import random
 import datetime
 import math
 import json
+import time
 
 file = open('config.json', 'r')
 data = file.read()
@@ -22,7 +23,8 @@ lol_list = []
 
 once_check = False
 lol_status = False
-chat_delay = 4
+chat_delay_set = 2
+chat_delay = chat_delay_set
 
 while True:
     data = irc_connect.recive_data(client_socket)
@@ -56,15 +58,16 @@ while True:
         lol_status = False
         once_check = False
         lol_list = []
-        chat_delay = 4
+        chat_delay = chat_delay_set
 
-    # print('60_sec: {}, ten_sec: {}, delay: {}, status: {}'.format(math.ceil(average_1/6), average_2, chat_delay, lol_status))
+    print('60_sec: {}, ten_sec: {}, delay: {}, status: {}'.format(math.ceil(average_1/6), average_2, chat_delay, lol_status))
 
     if lol_status == True and once_check == False:
         if chat_delay < 1:
+            time.sleep(random.random())
             random_number = random.randint(4, 8)
             irc_connect.send_message(client_socket, channel, 'ㅋ'*random_number)
             print('{} type lol'.format(datetime.datetime.now()))
-            # chat_delay = 4
+            # chat_delay = chat_delay_set
             once_check = True
             

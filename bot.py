@@ -23,8 +23,7 @@ lol_list = []
 
 once_check = False
 lol_status = False
-chat_delay_set = 2
-chat_delay = chat_delay_set
+chat_delay = random.randint(1, 3)
 
 while True:
     data = irc_connect.recive_data(client_socket)
@@ -58,7 +57,7 @@ while True:
         lol_status = False
         once_check = False
         lol_list = []
-        chat_delay = chat_delay_set
+        chat_delay = random.randint(1, 3)
 
     print('60_sec: {}, ten_sec: {}, delay: {}, status: {}'.format(math.ceil(average_1/6), average_2, chat_delay, lol_status))
 
@@ -68,6 +67,6 @@ while True:
             random_number = random.randint(4, 8)
             irc_connect.send_message(client_socket, channel, 'ㅋ'*random_number)
             print('{} type lol'.format(datetime.datetime.now()))
-            # chat_delay = chat_delay_set
+            # chat_delay = random.randint(1, 3)
             once_check = True
             

@@ -23,7 +23,7 @@ lol_list = []
 
 once_check = False
 lol_status = False
-chat_delay = random.randint(1, 3)
+chat_delay = 2
 
 while True:
     data = irc_connect.recive_data(client_socket)
@@ -43,30 +43,24 @@ while True:
             pass
 
     # lol_list에서 최근 1분이내 리스트를 추출한다
-    average_1 = 0
-    average_2 = 0
-    for i in range(len(lol_list)):
-        if (datetime.datetime.now() - lol_list[i][0]).seconds < 60:
-            average_1 += lol_list[i][1].count('ㅋ')
-        if (datetime.datetime.now() - lol_list[i][0]).seconds < 10:
-            average_2 += lol_list[i][1].count('ㅋ')
+    average_1, average_2 = function.get_average_data(lol_list, 60, 10, 'ㅋ')
 
-    if average_1/6 < average_2:
+    if average_1 < average_2:
         lol_status = True
-    elif average_1/6 > average_2:
+    elif average_1 > average_2:
         lol_status = False
         once_check = False
         lol_list = []
-        chat_delay = random.randint(1, 3)
+        chat_delay = 2
 
-    print('60_sec: {}, ten_sec: {}, delay: {}, status: {}'.format(math.ceil(average_1/6), average_2, chat_delay, lol_status))
+    print('60_sec: {}, ten_sec: {}, delay: {}, status: {}'.format(math.ceil(average_1), average_2, chat_delay, lol_status))
 
     if lol_status == True and once_check == False:
         if chat_delay < 1:
             time.sleep(random.random())
-            random_number = random.randint(4, 8)
-            irc_connect.send_message(client_socket, channel, 'ㅋ'*random_number)
+            alphabet_average = function.get_alphabet_average(lol_list, 'ㅋ')
+            irc_connect.send_message(client_socket, channel, 'ㅋ'*function.plus_minus(alphabet_average))
             print('{} type lol'.format(datetime.datetime.now()))
-            # chat_delay = random.randint(1, 3)
+            # chat_delay = 2
             once_check = True
             

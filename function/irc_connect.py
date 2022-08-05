@@ -1,9 +1,8 @@
-from shutil import register_unpack_format
 import requests
 import socket
 import datetime
-from emoji import demojize
 import json
+from emoji import demojize
 
 def get_access_token(client_id, client_secret):
     url = 'https://id.twitch.tv/oauth2/token?client_id=' + client_id + '&client_secret=' + client_secret + '&grant_type=client_credentials'

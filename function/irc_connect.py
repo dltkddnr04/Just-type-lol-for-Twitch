@@ -1,14 +1,6 @@
-import requests
 import socket
 import datetime
-import json
 from emoji import demojize
-
-def get_access_token(client_id, client_secret):
-    url = 'https://id.twitch.tv/oauth2/token?client_id=' + client_id + '&client_secret=' + client_secret + '&grant_type=client_credentials'
-    req = requests.post(url)
-    access_token = req.json()['access_token']
-    return access_token
 
 def set_socket(access_token, channel_name, nickname):
     token = 'oauth:' + access_token
@@ -28,11 +20,11 @@ def process_data(data):
     try:
         if data.startswith('PING'):
             return "PING"
-        else:
+        elif data != None:
             data = data.replace('\r\n', '')
             recived_time = datetime.datetime.now()
             recived_user_name = data.split('!')[0][1:]
-            recived_message = data.split('PRIVMSG')[1].split(':')[1]
+            recived_message = data.split('PRIVMSG')[1].split(':')[-1]
             recived_message = demojize(recived_message)
             # make it to list
             return [recived_time, recived_user_name, recived_message]

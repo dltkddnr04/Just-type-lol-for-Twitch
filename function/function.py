@@ -37,3 +37,13 @@ def calc_chat_status(chat_list, alphabet, time1, time2):
         return True
     else:
         return False
+
+def continuity_check(chat_list, alphabet):
+    chat_list.reverse()
+    continuity = 0
+    for chat in chat_list:
+        if count_alphabet(chat[2], alphabet)[0] > 0:
+            continuity += 1
+        else:
+            break
+    return continuity

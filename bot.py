@@ -30,18 +30,20 @@ chat_list = []
 threading.Thread(target=chat_recive_loop, args=(client_socket,)).start()
 
 once_check = False
-chat_delay = 2
+chat_delay = 0
+chat_sensitive = 2
 
 while True:
     recent_list = function.get_recent_chat(chat_list, 60)
     if function.calc_chat_status(recent_list, 'ㅋ', 60, 10):
-        if not once_check:
+        if not once_check and chat_delay == chat_sensitive:
             once_check = True
             time.sleep(random.random())
             sending_message = 'ㅋ' * math.ceil(function.get_average(recent_list, 'ㅋ'))
-            irc_connect.send_message(client_socket, channel, sending_message)
-            print('type lol ' + sending_message)
+            #irc_connect.send_message(client_socket, channel, sending_message)
+            #print('type lol ' + sending_message)
     else:
         once_check = False
-    
-    time.sleep(0.1)
+
+    print(function.continuity_check(recent_list, 'ㅋ'))
+    time.sleep(1)

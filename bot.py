@@ -4,6 +4,7 @@ import threading
 import time
 import random
 import math
+import datetime
 
 file = open('config.json', 'r')
 data = file.read()
@@ -36,14 +37,14 @@ chat_sensitive = 2
 while True:
     recent_list = function.get_recent_chat(chat_list, 60)
     if function.calc_chat_status(recent_list, 'ㅋ', 60, 10):
-        if not once_check and chat_delay == chat_sensitive:
+        chat_delay = function.continuity_check(recent_list, 'ㅋ')
+        if not once_check and chat_delay >= chat_sensitive:
             once_check = True
             time.sleep(random.random())
             sending_message = 'ㅋ' * math.ceil(function.get_average(recent_list, 'ㅋ'))
             #irc_connect.send_message(client_socket, channel, sending_message)
-            #print('type lol ' + sending_message)
+            print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'type lol ', sending_message)
     else:
         once_check = False
 
-    print(function.continuity_check(recent_list, 'ㅋ'))
-    time.sleep(1)
+    #print(chat_delay)

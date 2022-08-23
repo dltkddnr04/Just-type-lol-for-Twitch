@@ -55,3 +55,19 @@ def get_current_live_chat_headcount(chat_list):
         if chat[1] not in chat_user_list:
             chat_user_list.append(chat[1])
     return len(chat_user_list)
+
+def get_emoji_count(chat):
+    emoji_candidate_list = {}
+    emoji_list = {}
+
+    chat = chat.split()
+    for word in chat:
+        if word not in emoji_candidate_list:
+            emoji_candidate_list[word] = 1
+        else:
+            emoji_candidate_list[word] += 1
+
+    for emoji_candidate in emoji_candidate_list:
+        if emoji_candidate_list[emoji_candidate] > 1 and emoji_candidate.isalpha():
+            emoji_list[emoji_candidate] = emoji_candidate_list[emoji_candidate]
+    return  emoji_list

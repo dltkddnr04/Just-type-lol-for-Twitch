@@ -16,7 +16,8 @@ def get_average(chat_list, alphabet):
     chat_length = 0
     chat_average = 0
     for chat in chat_list:
-        if count_alphabet(chat[2], alphabet)[0] == count_alphabet(chat[2], alphabet)[1]:
+        # if count_alphabet(chat[2], alphabet)[0] == count_alphabet(chat[2], alphabet)[1]:
+        if count_alphabet(chat[2], alphabet)[0] > 0:
             chat_length += 1
             chat_average += count_alphabet(chat[2], alphabet)[0]
 
@@ -47,3 +48,10 @@ def continuity_check(chat_list, alphabet):
         else:
             break
     return continuity
+
+def get_current_live_chat_headcount(chat_list):
+    chat_user_list = []
+    for chat in chat_list:
+        if chat[1] not in chat_user_list:
+            chat_user_list.append(chat[1])
+    return len(chat_user_list)

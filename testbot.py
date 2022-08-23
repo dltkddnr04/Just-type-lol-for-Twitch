@@ -36,16 +36,6 @@ chat_sensitive = 2
 
 while True:
     recent_list = function.get_recent_chat(chat_list, 60)
-    if function.calc_chat_status(recent_list, 'ㅋ', 60, 10):
-        chat_delay = function.continuity_check(recent_list, 'ㅋ')
-        if not once_check and chat_delay >= chat_sensitive:
-            once_check = True
-            time.sleep(random.random())
-            sending_message = 'ㅋ' * math.ceil(function.get_average(recent_list, 'ㅋ'))
-            irc_connect.send_message(client_socket, channel, sending_message)
-            print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'type lol ', sending_message)
-    else:
-        once_check = False
-    
-    # print(chat_delay)
-    # time.sleep(0.5)
+    user_count = function.get_current_live_chat_headcount(recent_list)
+    print('user_count: {}'.format(user_count))
+    time.sleep(1)

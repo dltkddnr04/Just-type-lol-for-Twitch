@@ -42,12 +42,12 @@ def get_latter_average(chat_log, latter):
         latter: 검색할 문자
     '''
 
-    count = 0
     message_count = 0
+    latter_count = 0
 
     for chat in chat_log:
-        count += chat[2].count(latter)
         if latter in chat[2]:
             message_count += 1
+            latter_count += chat[2].count(latter)
     
-    return round(count/message_count)
+    return round(latter_count/message_count)
